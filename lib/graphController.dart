@@ -1134,10 +1134,15 @@ class GraphController extends GetxController {
 
       for (String datas in result['data']) {
         final data = datas.split(',');
-        CoordinateModel coordinate =
-            CoordinateModel(x: double.parse(data[0]), y: double.parse(data[1]));
-        coordinateList.add(coordinate);
+        double x = double.parse(data[0]) / 30;
+        double y = 350 - 3.5 * double.parse(data[1]);
+        if(y >= 0){
+          CoordinateModel coordinate = CoordinateModel(x: x, y: y);
+          coordinateList.add(coordinate);
+        }
       }
+
+      coordinateList.sort((a, b) => a.x.compareTo(b.x));
 
       GraphModel graphModel =
           GraphModel(date: date, coordinateList: coordinateList);
